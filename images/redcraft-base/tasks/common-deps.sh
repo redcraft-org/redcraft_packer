@@ -2,4 +2,8 @@
 
 set -e
 
-apt-get install htop
+apt-get update
+
+apt-get upgrade -y
+
+apt-get install -y htop
