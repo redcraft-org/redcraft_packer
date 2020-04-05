@@ -4,7 +4,7 @@ set -e
 
 apt-get update
 
-apt-get install -y htop python3 tmux byobu git jq apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common
+apt-get install -y htop python3 tmux byobu git jq apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common multitail tree iotop cowsay sl iftop
 
 wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
 
@@ -26,16 +26,18 @@ for user in /tmp/users/*.json; do
     chmod 700 -R /home/$username/.ssh/
     chmod 600 /home/$username/.ssh/authorized_keys
     usermod -a -G sudo $username
-    cp /tmp/bashrc /home/$username/.bashrc
-    chmod +x /home/$username/.bashrc
-    chown $username:$username /tmp/bashrc /home/$username/.bashrc
+    if [[ -f "/tmp/users/$username.bashrc" ]]; then
+        cp "/tmp/users/$username.bashrc" /home/$username/.bashrc
+        chmod +x /home/$username/.bashrc
+        chown $username:$username /home/$username/.bashrc
+    fi
     echo "Added user $username"
 done
 
-mv /tmp/bashrc /root/.bashrc
-chmod +x /root/.bashrc
-
-mv /tmp/motd /etc/motd.head
+mv /tmp/motd.head /etc/motd.head
+sed -i '/Documentation:/d' /etc/update-motd.d/50-scw
+sed -i '/Community:/d' /etc/update-motd.d/50-scw
+sed -i '/Image source:/,+1 d' /etc/update-motd.d/50-scw
 
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 

@@ -22,12 +22,8 @@
             "type": "shell"
         }, {
             "type": "file",
-            "source": "files/motd",
-            "destination": "/tmp/motd"
-        }, {
-            "type": "file",
-            "source": "files/bashrc",
-            "destination": "/tmp/bashrc"
+            "source": "files/motd.head",
+            "destination": "/tmp/motd.head"
         }, {
             "type": "file",
             "source": "../../users",
