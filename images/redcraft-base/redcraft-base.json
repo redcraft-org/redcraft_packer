@@ -1,0 +1,38 @@
+{
+    "variables": {
+        "organization_id": "",
+        "api_token": ""
+    },
+    "builders": [{
+        "organization_id": "{{ user `organization_id` }}",
+        "api_token": "{{ user `api_token` }}",
+        "image_name": "redcraft-base-{{ timestamp }}",
+        "snapshot_name": "redcraft-base-snapshot-{{ timestamp }}",
+        "type": "scaleway",
+        "image": "cc9188b3-3938-47d7-b091-c9ecad1fe507",
+        "region": "par1",
+        "commercial_type": "DEV1-S",
+        "ssh_username": "root",
+        "remove_volume": true
+    }],
+    "provisioners": [{
+            "inline": [
+                "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+            ],
+            "type": "shell"
+        }, {
+            "type": "file",
+            "source": "files/motd.head",
+            "destination": "/tmp/motd.head"
+        }, {
+            "type": "file",
+            "source": "../../users",
+            "destination": "/tmp/users"
+        }, {
+            "scripts": [
+                "./tasks/provision.sh"
+            ],
+            "type": "shell"
+        }
+    ]
+}
