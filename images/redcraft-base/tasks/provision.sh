@@ -4,9 +4,15 @@ set -e
 
 apt-get update
 
-apt-get upgrade -y
+apt-get install -y htop python3 tmux byobu git jq apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common
 
-apt-get install -y htop python3 tmux byobu git jq
+wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
+
+add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+
+apt-get update
+
+apt-get install -y adoptopenjdk-8-hotspot
 
 for user in /tmp/users/*.json; do
     username=$(cat $user | jq -r '.username')
@@ -20,11 +26,21 @@ for user in /tmp/users/*.json; do
     chmod 700 -R /home/$username/.ssh/
     chmod 600 /home/$username/.ssh/authorized_keys
     usermod -a -G sudo $username
+    cp /tmp/bashrc /home/$username/.bashrc
+    chmod +x /home/$username/.bashrc
+    chown $username:$username /tmp/bashrc /home/$username/.bashrc
     echo "Added user $username"
 done
 
+mv /tmp/bashrc /root/.bashrc
+chmod +x /root/.bashrc
+
 mv /tmp/motd /etc/motd.head
 
-mv /tmp/sshd_config /etc/ssh/sshd_config
+sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+
+touch /var/lib/cloud/instance/locale-check.skip
+
+apt-get upgrade -y
 
 apt-get autoremove -y

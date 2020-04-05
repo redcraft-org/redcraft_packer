@@ -12,7 +12,6 @@
         "image": "cc9188b3-3938-47d7-b091-c9ecad1fe507",
         "region": "par1",
         "commercial_type": "DEV1-S",
-        "ssh_private_key_file": "~/.ssh/id_rsa",
         "ssh_username": "root",
         "remove_volume": true
     }],
@@ -27,8 +26,8 @@
             "destination": "/tmp/motd"
         }, {
             "type": "file",
-            "source": "files/sshd_config",
-            "destination": "/tmp/sshd_config"
+            "source": "files/bashrc",
+            "destination": "/tmp/bashrc"
         }, {
             "type": "file",
             "source": "../../users",
