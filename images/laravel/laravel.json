@@ -1,0 +1,42 @@
+{
+    "variables": {
+        "organization_id": "",
+        "api_token": ""
+    },
+    "builders": [{
+        "organization_id": "{{ user `organization_id` }}",
+        "api_token": "{{ user `api_token` }}",
+        "image_name": "redcraft-laravel-{{ timestamp }}",
+        "snapshot_name": "redcraft-laravel-snapshot-{{ timestamp }}",
+        "type": "scaleway",
+        "image": "557bde79-1546-4892-b527-16533fa87d07",
+        "region": "par1",
+        "commercial_type": "DEV1-S",
+        "ssh_username": "root",
+        "remove_volume": true
+    }],
+    "provisioners": [
+        {
+            "inline": [
+                "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+            ],
+            "type": "shell"
+        },
+        {
+            "type": "file",
+            "source": "files/000-redcraft.conf",
+            "destination": "/tmp/000-redcraft.conf"
+        },
+        {
+            "type": "file",
+            "source": "files/redcraft-worker.conf",
+            "destination": "/tmp/redcraft-worker.conf"
+        },
+        {
+            "scripts": [
+                "tasks/install_laravel.sh"
+            ],
+            "type": "shell"
+        }
+    ]
+}
