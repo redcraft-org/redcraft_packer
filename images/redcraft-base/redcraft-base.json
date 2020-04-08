@@ -1,38 +1,44 @@
 {
-    "variables": {
-        "organization_id": "",
-        "api_token": ""
-    },
-    "builders": [{
-        "organization_id": "{{ user `organization_id` }}",
-        "api_token": "{{ user `api_token` }}",
-        "image_name": "redcraft-base-{{ timestamp }}",
-        "snapshot_name": "redcraft-base-snapshot-{{ timestamp }}",
-        "type": "scaleway",
-        "image": "cc9188b3-3938-47d7-b091-c9ecad1fe507",
-        "region": "par1",
-        "commercial_type": "DEV1-S",
-        "ssh_username": "root",
-        "remove_volume": true
-    }],
-    "provisioners": [{
+    "builders": [
+        {
+            "api_token": "{{ user `api_token` }}",
+            "commercial_type": "DEV1-S",
+            "image": "cc9188b3-3938-47d7-b091-c9ecad1fe507",
+            "image_name": "redcraft-base-{{ timestamp }}",
+            "organization_id": "{{ user `organization_id` }}",
+            "region": "par1",
+            "remove_volume": true,
+            "snapshot_name": "redcraft-base-snapshot-{{ timestamp }}",
+            "ssh_username": "root",
+            "type": "scaleway"
+        }
+    ],
+    "provisioners": [
+        {
             "inline": [
                 "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
             ],
             "type": "shell"
-        }, {
-            "type": "file",
+        },
+        {
+            "destination": "/tmp/motd.head",
             "source": "files/motd.head",
-            "destination": "/tmp/motd.head"
-        }, {
-            "type": "file",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/users",
             "source": "../../users",
-            "destination": "/tmp/users"
-        }, {
+            "type": "file"
+        },
+        {
             "scripts": [
                 "./tasks/provision.sh"
             ],
             "type": "shell"
         }
-    ]
+    ],
+    "variables": {
+        "api_token": "",
+        "organization_id": ""
+    }
 }
