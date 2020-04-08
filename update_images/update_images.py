@@ -9,6 +9,10 @@ if __name__ == '__main__':
     region = os.environ.get('SCALEWAY_REGION')
     auth_token = os.environ.get('SCALEWAY_AUTH_TOKEN')
 
+    if not image_prefix:
+        print('Please set IMAGE_PREFIX in order to get this script running')
+        exit(1)
+
     api = ComputeAPI(region=region, auth_token=auth_token)
 
     images = api.query().images.get().get('images')
@@ -17,10 +21,18 @@ if __name__ == '__main__':
 
     base_image_family = '{}-base'.format(image_prefix)
 
+    stats = {
+        'scanned': 0,
+        'deleted': 0,
+        'updated': 0
+    }
+
     # Find newest images
     for image in images:
         if not image['name'].startswith(image_prefix):
             continue
+
+        stats['scanned'] += 1
 
         image_family = '-'.join(image['name'].split('-')[:-1])
 
@@ -42,6 +54,8 @@ if __name__ == '__main__':
             api.query().images(image['id']).delete()
             api.query().snapshots(image['root_volume']['id']).delete()
 
+            stats['deleted'] += 1
+
     # Update .json packer configs with latest base image + reformating
     for image in os.listdir('../images'):
         packer_config = ''
@@ -51,6 +65,9 @@ if __name__ == '__main__':
 
         if image != base_image_family:
             packer_config['builders'][0]['image'] = latest_images[base_image_family]['id']
+            stats['updated'] += 1
 
         with open(packer_config_filename, 'w') as packer_config_file:
             json.dump(packer_config, packer_config_file, indent=4, sort_keys=True)
+
+    print('Scanned {scanned} image(s), deleted {deleted} image(s), updated {updated} image(s)'.format(**stats))
