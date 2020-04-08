@@ -24,7 +24,8 @@ if __name__ == '__main__':
     stats = {
         'scanned': 0,
         'deleted': 0,
-        'updated': 0
+        'updated': 0,
+        'already_updated': 0,
     }
 
     # Find newest images
@@ -64,12 +65,13 @@ if __name__ == '__main__':
             packer_config = json.load(packer_config_file)
 
         if image != base_image_family:
-            packer_config['builders'][0]['image'] = latest_images[base_image_family]['id']
-
             if packer_config['builders'][0]['image'] != latest_images[base_image_family]['id']:
                 stats['updated'] += 1
+                packer_config['builders'][0]['image'] = latest_images[base_image_family]['id']
+            else:
+                stats['already_updated'] += 1
 
         with open(packer_config_filename, 'w') as packer_config_file:
             json.dump(packer_config, packer_config_file, indent=4, sort_keys=True)
 
-    print('Scanned {scanned} image(s), deleted {deleted} image(s), updated {updated} image(s)'.format(**stats))
+    print('Scanned {scanned} image(s), deleted {deleted} image(s), updated {updated} image(s) - {already_updated} already updated'.format(**stats))
