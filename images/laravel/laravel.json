@@ -1,20 +1,18 @@
 {
-    "variables": {
-        "organization_id": "",
-        "api_token": ""
-    },
-    "builders": [{
-        "organization_id": "{{ user `organization_id` }}",
-        "api_token": "{{ user `api_token` }}",
-        "image_name": "redcraft-laravel-{{ timestamp }}",
-        "snapshot_name": "redcraft-laravel-snapshot-{{ timestamp }}",
-        "type": "scaleway",
-        "image": "557bde79-1546-4892-b527-16533fa87d07",
-        "region": "par1",
-        "commercial_type": "DEV1-S",
-        "ssh_username": "root",
-        "remove_volume": true
-    }],
+    "builders": [
+        {
+            "api_token": "{{ user `api_token` }}",
+            "commercial_type": "DEV1-S",
+            "image": "aa547fdf-6a85-4029-a698-3583e0c3f06d",
+            "image_name": "redcraft-laravel-{{ timestamp }}",
+            "organization_id": "{{ user `organization_id` }}",
+            "region": "par1",
+            "remove_volume": true,
+            "snapshot_name": "redcraft-laravel-snapshot-{{ timestamp }}",
+            "ssh_username": "root",
+            "type": "scaleway"
+        }
+    ],
     "provisioners": [
         {
             "inline": [
@@ -23,14 +21,14 @@
             "type": "shell"
         },
         {
-            "type": "file",
+            "destination": "/tmp/000-redcraft.conf",
             "source": "files/000-redcraft.conf",
-            "destination": "/tmp/000-redcraft.conf"
+            "type": "file"
         },
         {
-            "type": "file",
+            "destination": "/tmp/redcraft-worker.conf",
             "source": "files/redcraft-worker.conf",
-            "destination": "/tmp/redcraft-worker.conf"
+            "type": "file"
         },
         {
             "scripts": [
@@ -38,5 +36,9 @@
             ],
             "type": "shell"
         }
-    ]
+    ],
+    "variables": {
+        "api_token": "",
+        "organization_id": ""
+    }
 }
