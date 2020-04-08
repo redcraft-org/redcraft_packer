@@ -65,7 +65,9 @@ if __name__ == '__main__':
 
         if image != base_image_family:
             packer_config['builders'][0]['image'] = latest_images[base_image_family]['id']
-            stats['updated'] += 1
+
+            if packer_config['builders'][0]['image'] != latest_images[base_image_family]['id']:
+                stats['updated'] += 1
 
         with open(packer_config_filename, 'w') as packer_config_file:
             json.dump(packer_config, packer_config_file, indent=4, sort_keys=True)

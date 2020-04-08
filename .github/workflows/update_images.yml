@@ -29,3 +29,13 @@ jobs:
         cd update_images
         ./setup_env.sh
         env/bin/python update_images.py
+    - name: push
+      uses: github-actions-x/commit@v2.5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        push-branch: 'master'
+        commit-message: 'Update base image and formatting'
+        force-add: 'true'
+        files: images/*/*.json
+        name: RedCraft
+        email: contact@redcraft.org
