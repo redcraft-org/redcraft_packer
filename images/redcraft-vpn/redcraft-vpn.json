@@ -1,0 +1,34 @@
+{
+    "builders": [
+        {
+            "api_token": "{{ user `api_token` }}",
+            "commercial_type": "DEV1-S",
+            "image": "711ee962-d4e4-4642-a5c8-50e2e33dcd89",
+            "image_name": "redcraft-vpn-{{ timestamp }}",
+            "organization_id": "{{ user `organization_id` }}",
+            "region": "par1",
+            "remove_volume": true,
+            "snapshot_name": "redcraft-vpn-snapshot-{{ timestamp }}",
+            "ssh_username": "root",
+            "type": "scaleway"
+        }
+    ],
+    "provisioners": [
+        {
+            "inline": [
+                "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+            ],
+            "type": "shell"
+        },
+        {
+            "scripts": [
+                "tasks/install_pritunl.sh"
+            ],
+            "type": "shell"
+        }
+    ],
+    "variables": {
+        "api_token": "",
+        "organization_id": ""
+    }
+}
