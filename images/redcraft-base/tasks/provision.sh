@@ -4,7 +4,7 @@ set -e
 
 apt-get update
 
-apt-get install -y htop python3 tmux byobu git jq apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common multitail tree iotop cowsay sl iftop
+apt-get install -y htop python3 tmux byobu git jq apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common multitail tree iotop cowsay sl iftop dnsutils traceroute
 
 wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
 
@@ -46,3 +46,5 @@ touch /var/lib/cloud/instance/locale-check.skip
 apt-get upgrade -y
 
 apt-get autoremove -y
+
+echo '' > /root/.ssh/authorized_keys

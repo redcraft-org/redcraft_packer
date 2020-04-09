@@ -6,7 +6,7 @@ echo "Installing dependencies"
 wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 apt-get update
-
+sleep 1
 apt-get install -y apache2 php7.4 php7.4-fpm php7.4-xml php7.4-gd php7.4-opcache php7.4-mbstring php7.4-mysql mariadb-client supervisor
 
 echo "Creating RedCraft directories"
