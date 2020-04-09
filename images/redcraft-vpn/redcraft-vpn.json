@@ -3,7 +3,7 @@
         {
             "api_token": "{{ user `api_token` }}",
             "commercial_type": "DEV1-S",
-            "image": "711ee962-d4e4-4642-a5c8-50e2e33dcd89",
+            "image": "5cb421de-df00-447c-913d-4d78f638dfbf",
             "image_name": "redcraft-vpn-{{ timestamp }}",
             "organization_id": "{{ user `organization_id` }}",
             "region": "par1",
