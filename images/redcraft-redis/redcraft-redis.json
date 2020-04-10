@@ -2,13 +2,13 @@
     "builders": [
         {
             "api_token": "{{ user `api_token` }}",
-            "commercial_type": "DEV1-S",
+            "commercial_type": "DEV1-M",
             "image": "5cb421de-df00-447c-913d-4d78f638dfbf",
-            "image_name": "redcraft-mysql-{{ timestamp }}",
+            "image_name": "redcraft-redis-{{ timestamp }}",
             "organization_id": "{{ user `organization_id` }}",
             "region": "par1",
             "remove_volume": true,
-            "snapshot_name": "redcraft-mysql-snapshot-{{ timestamp }}",
+            "snapshot_name": "redcraft-redis-snapshot-{{ timestamp }}",
             "ssh_username": "root",
             "type": "scaleway"
         }
@@ -22,7 +22,7 @@
         },
         {
             "scripts": [
-                "tasks/install_mysql.sh"
+                "tasks/install_redis.sh"
             ],
             "type": "shell"
         }
