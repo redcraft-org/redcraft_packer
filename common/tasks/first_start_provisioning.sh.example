@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+# Do not remove this
+while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done
+
+# Setup netdata
+export TOKEN=''
+export ROOMS=''
+
+/usr/sbin/netdata-claim.sh -token=$TOKEN -rooms=$ROOMS -url=https://app.netdata.cloud
+
+# NEVER remove this!
+rm /etc/cron.d/first_start_provisioning
+rm -- "$0"
