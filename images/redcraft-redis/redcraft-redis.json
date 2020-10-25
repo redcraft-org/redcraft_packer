@@ -1,22 +1,39 @@
 {
     "builders": [
         {
-            "api_token": "{{ user `api_token` }}",
+            "access_key": "{{ user `access_key` }}",
             "commercial_type": "DEV1-M",
-            "image": "5cb421de-df00-447c-913d-4d78f638dfbf",
+            "image": "cc9188b3-3938-47d7-b091-c9ecad1fe507",
             "image_name": "redcraft-redis-{{ timestamp }}",
-            "organization_id": "{{ user `organization_id` }}",
-            "region": "par1",
+            "project_id": "{{ user `project_id` }}",
             "remove_volume": true,
+            "secret_key": "{{ user `secret_key` }}",
             "snapshot_name": "redcraft-redis-snapshot-{{ timestamp }}",
             "ssh_username": "root",
-            "type": "scaleway"
+            "type": "scaleway",
+            "zone": "{{ user `zone` }}"
         }
     ],
     "provisioners": [
         {
             "inline": [
                 "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+            ],
+            "type": "shell"
+        },
+        {
+            "destination": "/tmp/motd.head",
+            "source": "../../common/config/motd.head",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/users",
+            "source": "../../common/users",
+            "type": "file"
+        },
+        {
+            "scripts": [
+                "../../common/tasks/provision.sh"
             ],
             "type": "shell"
         },
@@ -28,7 +45,9 @@
         }
     ],
     "variables": {
-        "api_token": "",
-        "organization_id": ""
+        "access_key": "{{ env `SCW_ACCESS_KEY` }}",
+        "project_id": "{{ env `SCW_DEFAULT_PROJECT_ID` }}",
+        "secret_key": "{{ env `SCW_SECRET_KEY` }}",
+        "zone": "{{ env `SCW_DEFAULT_ZONE` }}"
     }
 }
