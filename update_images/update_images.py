@@ -53,14 +53,4 @@ if __name__ == '__main__':
 
             stats['deleted'] += 1
 
-    # Update .json packer configs reformating
-    for image in os.listdir('../images'):
-        packer_config = ''
-        packer_config_filename = '../images/{image}/{image}.json'.format(image=image)
-        with open(packer_config_filename, 'r') as packer_config_file:
-            packer_config = json.load(packer_config_file)
-
-        with open(packer_config_filename, 'w') as packer_config_file:
-            json.dump(packer_config, packer_config_file, indent=4, sort_keys=True)
-
     print('Scanned {scanned} image(s) and deleted {deleted} image(s)'.format(**stats))
