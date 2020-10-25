@@ -14,26 +14,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.8
+    - name: Set up Python
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
     - name: Run script
       env:
         IMAGE_PREFIX: redcraft
-        SCALEWAY_REGION: par1
-        SCALEWAY_AUTH_TOKEN: ${{ secrets.SCALEWAY_AUTH_TOKEN }}
+        SCW_DEFAULT_REGION: par1
+        SCW_SECRET_KEY: ${{ secrets.SCALEWAY_AUTH_TOKEN }}
       run: |
         cd update_images
         ./setup_env.sh
         env/bin/python update_images.py
-    - name: push
-      uses: github-actions-x/commit@v2.5
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        push-branch: 'master'
-        commit-message: 'Update base image and formatting'
-        force-add: 'true'
-        files: images/*/*.json
-        name: RedCraft
-        email: contact@redcraft.org

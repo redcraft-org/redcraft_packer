@@ -4,6 +4,8 @@ set -e
 
 apt-get update
 
+apt-get upgrade -y --option=Dpkg::Options::=--force-confdef
+
 apt-get install -y htop python3 tmux byobu git jq apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common multitail tree iotop cowsay sl iftop dnsutils traceroute
 
 wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
@@ -42,8 +44,6 @@ sed -i '/Image source:/,+1 d' /etc/update-motd.d/50-scw
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 
 touch /var/lib/cloud/instance/locale-check.skip
-
-apt-get upgrade -y
 
 apt-get autoremove -y
 
