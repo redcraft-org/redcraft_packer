@@ -15,7 +15,7 @@ You need to make sure the following environment variables are defined (you can g
 - `SCW_DEFAULT_PROJECT_ID`
 - `SCW_DEFAULT_ZONE`
 
-Notice: As of 2020, RedCraft uses the `par-2` zone.
+Notice: As of 2020, RedCraft uses the `par-1` zone.
 
 ### Configure first start provisioning
 
