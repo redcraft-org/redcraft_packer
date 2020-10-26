@@ -6,14 +6,14 @@ from scaleway.apis import ComputeAPI
 
 if __name__ == '__main__':
     image_prefix = os.environ.get('IMAGE_PREFIX', 'redcraft')
-    region = os.environ.get('SCW_DEFAULT_REGION')
+    zone = os.environ.get('SCW_DEFAULT_ZONE')
     secret_key = os.environ.get('SCW_SECRET_KEY')
 
     if not image_prefix:
         print('Please set IMAGE_PREFIX in order to get this script running')
         exit(1)
 
-    api = ComputeAPI(region=region, auth_token=secret_key)
+    api = ComputeAPI(region=zone, auth_token=secret_key)
 
     images = api.query().images.get().get('images')
 
