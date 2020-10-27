@@ -15,7 +15,15 @@ You need to make sure the following environment variables are defined (you can g
 - `SCW_DEFAULT_PROJECT_ID`
 - `SCW_DEFAULT_ZONE`
 
-Notice: As of 2020, RedCraft uses the `fr-par-1` zone.
+Notice: As of 2020, RedCraft uses the `par-1` zone.
+
+### Configure first start provisioning
+
+The first start provisioning script is ran when the image is actually deployed, not during the image build.
+
+Make sure to run `cp common/tasks/first_start_provisioning.sh.example common/tasks/first_start_provisioning.sh` and edit the script to add your Netdata Cloud token and rooms, or even setup any other kind of monitoring. You can also use an empty file if you don't care about monitoring.
+
+Please make sure that the script ends with `rm /etc/cron.d/first_start_provisioning` and `rm -- "$0"` or it will be provisioned at each boot!
 
 ### Generate image
 
@@ -24,3 +32,5 @@ To build an image, `cd` to the image directory and run the following command :
 
 An alternative to setting environment variables is to define variables in the build command (not recommended, especially if you share your computer):
 `packer build -var 'access_key=<access_key>' -var 'secret_key=<secret_key>' -var 'project_id=<project_id>' -var 'zone=<zone>' redcraft-*.json`
+
+Notice: all our images are based on Debian 10, and its Scaleway ID is `cc9188b3-3938-47d7-b091-c9ecad1fe507`

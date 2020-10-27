@@ -8,7 +8,7 @@
             "project_id": "{{ user `project_id` }}",
             "remove_volume": true,
             "secret_key": "{{ user `secret_key` }}",
-            "snapshot_name": "redcraft-vpn-snapshot-{{ timestamp }}",
+            "snapshot_name": "redcraft-vpn-image-snapshot-{{ timestamp }}",
             "ssh_username": "root",
             "type": "scaleway",
             "zone": "{{ user `zone` }}"
@@ -29,6 +29,11 @@
         {
             "destination": "/tmp/users",
             "source": "../../common/users",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/first_start_provisioning.sh",
+            "source": "../../common/tasks/first_start_provisioning.sh",
             "type": "file"
         },
         {

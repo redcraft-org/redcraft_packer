@@ -21,7 +21,7 @@ jobs:
     - name: Run script
       env:
         IMAGE_PREFIX: redcraft
-        SCW_DEFAULT_REGION: par1
+        SCW_DEFAULT_ZONE: par1
         SCW_SECRET_KEY: ${{ secrets.SCALEWAY_AUTH_TOKEN }}
       run: |
         cd update_images
