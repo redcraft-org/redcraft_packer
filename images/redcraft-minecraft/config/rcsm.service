@@ -1,0 +1,11 @@
+[Unit]
+Description=RedCraft Server Management
+Documentation=https://github.com/redcraft-org/redcraft_server_management/
+
+
+[Service]
+ExecStart=/usr/bin/rcsm
+EnvironmentFile=/etc/rcsm
+
+[Install]
+WantedBy=multi-user.target

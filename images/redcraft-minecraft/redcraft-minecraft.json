@@ -1,0 +1,76 @@
+{
+    "builders": [
+        {
+            "access_key": "{{ user `access_key` }}",
+            "commercial_type": "DEV1-S",
+            "image": "cc9188b3-3938-47d7-b091-c9ecad1fe507",
+            "image_name": "redcraft-minecraft-{{ timestamp }}",
+            "project_id": "{{ user `project_id` }}",
+            "remove_volume": true,
+            "secret_key": "{{ user `secret_key` }}",
+            "snapshot_name": "redcraft-minecraft-image-snapshot-{{ timestamp }}",
+            "ssh_username": "root",
+            "type": "scaleway",
+            "zone": "{{ user `zone` }}"
+        }
+    ],
+    "provisioners": [
+        {
+            "inline": [
+                "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+            ],
+            "type": "shell"
+        },
+        {
+            "destination": "/tmp/motd.head",
+            "source": "../../common/config/motd.head",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/users",
+            "source": "../../common/users",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/first_start_provisioning.sh",
+            "source": "../../common/tasks/first_start_provisioning.sh",
+            "type": "file"
+        },
+        {
+            "scripts": [
+                "../../common/tasks/provision.sh"
+            ],
+            "type": "shell"
+        },
+        {
+            "destination": "/tmp/rcsm.service",
+            "source": "config/rcsm.service",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/rcsm_config",
+            "source": "config/rcsm_config",
+            "type": "file"
+        },
+        {
+            "scripts": [
+                "tasks/install_rcsm.sh"
+            ],
+            "type": "shell",
+            "environment_vars": [
+                "SETUP_AWS_ACCESS_KEY_ID={{user `setup_aws_access_key_id`}}",
+                "SETUP_AWS_SECRET_ACCESS_KEY={{user `setup_aws_secret_key`}}",
+                "SETUP_WEBHOOKS_ENDPOINT={{user `setup_webhooks_endpoint`}}"
+            ]
+        }
+    ],
+    "variables": {
+        "access_key": "{{ env `SCW_ACCESS_KEY` }}",
+        "project_id": "{{ env `SCW_DEFAULT_PROJECT_ID` }}",
+        "secret_key": "{{ env `SCW_SECRET_KEY` }}",
+        "zone": "{{ env `SCW_DEFAULT_ZONE` }}",
+        "setup_aws_access_key_id": "{{ env `SETUP_AWS_ACCESS_KEY_ID` }}",
+        "setup_aws_secret_key": "{{ env `SETUP_AWS_SECRET_ACCESS_KEY` }}",
+        "setup_webhooks_endpoint": "{{ env `SETUP_WEBHOOKS_ENDPOINT` }}"
+    }
+}
