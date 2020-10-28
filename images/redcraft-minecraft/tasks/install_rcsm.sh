@@ -13,10 +13,6 @@ chmod +x /usr/bin/rcsm
 # Config rcsm
 mv /tmp/rcsm_config /etc/rcsm_config
 
-sed -i "s/SETUP_AWS_ACCESS_KEY_ID\/$SETUP_AWS_ACCESS_KEY_ID/g" /etc/rcsm_config
-sed -i "s/SETUP_AWS_SECRET_ACCESS_KEY\/$SETUP_AWS_SECRET_ACCESS_KEY/g" /etc/rcsm_config
-sed -i "s/SETUP_WEBHOOKS_ENDPOINT\/$SETUP_WEBHOOKS_ENDPOINT/g" /etc/rcsm_config
-
 # Start rcsm at boot
 mv /tmp/rcsm.service /etc/systemd/system/rcsm.service
 systemctl daemon-reload
