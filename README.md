@@ -34,3 +34,9 @@ An alternative to setting environment variables is to define variables in the bu
 `packer build -var 'access_key=<access_key>' -var 'secret_key=<secret_key>' -var 'project_id=<project_id>' -var 'zone=<zone>' redcraft-*.json`
 
 Notice: all our images are based on Debian 10, and its Scaleway ID is `cc9188b3-3938-47d7-b091-c9ecad1fe507`
+
+#### Special notes
+
+##### `minecraft` image
+
+The `redcraft-minecraft` image installs [rcsm](https://github.com/redcraft-org/redcraft_server_management) and you'll need to copy `rcsm_config.example` to `rcsm_config` and update the config to your needs
