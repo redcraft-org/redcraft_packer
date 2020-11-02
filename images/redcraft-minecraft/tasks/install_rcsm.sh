@@ -11,7 +11,7 @@ wget -O /usr/bin/rcsm $URL
 chmod +x /usr/bin/rcsm
 
 # Config rcsm
-mv /tmp/rcsm_config /etc/rcsm_config
+mv /tmp/rcsm_config /etc/rcsm
 
 # Start rcsm at boot
 mv /tmp/rcsm.service /etc/systemd/system/rcsm.service
