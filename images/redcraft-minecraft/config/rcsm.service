@@ -1,0 +1,15 @@
+[Unit]
+Description=RedCraft Server Management
+Documentation=https://github.com/redcraft-org/redcraft_server_management/
+After=network-online.target
+Wants=network-online.target systemd-networkd-wait-online.service
+
+[Service]
+Restart=always
+RestartSec=5s
+ExecStart=/opt/rcsm/rcsm
+EnvironmentFile=/opt/rcsm/rcsm_config
+User=minecraft
+
+[Install]
+WantedBy=multi-user.target
