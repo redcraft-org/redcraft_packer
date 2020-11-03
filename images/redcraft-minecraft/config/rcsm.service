@@ -5,10 +5,10 @@ After=network-online.target
 Wants=network-online.target systemd-networkd-wait-online.service
 
 [Service]
-Restart=on-failure
+Restart=always
 RestartSec=5s
-ExecStart=/usr/bin/rcsm
-EnvironmentFile=/etc/rcsm
+ExecStart=/opt/rcsm/rcsm
+EnvironmentFile=/opt/rcsm/rcsm_config
 User=minecraft
 
 [Install]

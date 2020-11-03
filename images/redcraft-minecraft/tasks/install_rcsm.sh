@@ -4,14 +4,17 @@ set -e
 
 # Add minecraft user
 adduser --system --no-create-home --group minecraft
+mkdir /opt/rcsm
+chown -R minecraft:minecraft /opt/rcsm
 
 # Install rcsm
 URL=`curl -s https://api.github.com/repos/redcraft-org/redcraft_server_management/releases/latest | grep "amd64" | cut -d : -f 2,3 | tr -d \" | tail -n 1`
-wget -O /usr/bin/rcsm $URL
-chmod +x /usr/bin/rcsm
+wget -O /opt/rcsm/rcsm $URL
+chmod +x /opt/rcsm/rcsm
 
 # Config rcsm
-mv /tmp/rcsm_config /etc/rcsm
+mv /tmp/rcsm_config /opt/rcsm/rcsm_config
+chown -R minecraft:minecraft /opt/rcsm
 
 # Start rcsm at boot
 mv /tmp/rcsm.service /etc/systemd/system/rcsm.service
@@ -32,6 +35,7 @@ blkid -o value -s TYPE /dev/sda 2>&1 > /dev/null
 if [ $? -ne 0 ]; then
     mkfs -t ext4 /dev/sda
     mount -a
+    mkdir /mnt/minecraft/servers
     chown -R minecraft:minecraft /mnt/minecraft
     chmod +rw /mnt/minecraft
 fi
