@@ -37,6 +37,11 @@
             "type": "file"
         },
         {
+            "destination": "/tmp/gunicorn.service",
+            "source": "config/gunicorn.service",
+            "type": "file"
+        },
+        {
             "scripts": [
                 "../../common/tasks/provision.sh"
             ],
@@ -44,7 +49,7 @@
         },
         {
             "scripts": [
-                "tasks/install_redis.sh"
+                "tasks/install_django.sh"
             ],
             "type": "shell"
         }
