@@ -1,0 +1,24 @@
+[Unit]
+Description=Gunicorn website deamon
+After=network.target
+
+[Service]
+PIDFile=/run/gunicorn/pid
+User=gunicorn
+Group=gunicorn
+RuntimeDirectory=gunicorn
+WorkingDirectory=/opt/redcraft_website
+EnvironmentFile=/opt/redcraft_website/.env
+ExecStart=/usr/bin/authbind /opt/redcraft_website/env/bin/gunicorn --log-file=/var/log/redcraft/redcraft_website.log --pid /run/gunicorn/pid --bind 0.0.0.0:80 "redcraft_website.wsgi"
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+Restart=on-failure
+RestartSec=5s
+
+[Socket]
+ListenStream=80
+NoDelay=true
+
+[Install]
+WantedBy=multi-user.target

@@ -40,3 +40,25 @@ Notice: all our images are based on Debian 10, and its Scaleway ID is `cc9188b3-
 ##### `minecraft` image
 
 The `redcraft-minecraft` image installs [rcsm](https://github.com/redcraft-org/redcraft_server_management) and you'll need to copy `rcsm_config.example` to `rcsm_config` and update the config to your needs
+
+## Add your user account
+
+To add your user account, you'll need the following things:
+
+- Your username
+- Your SSH public key
+- Your encoded password (Can be generated with `mkpasswd -m sha-512`)
+
+Once you have that information, create a JSON file as `common/users/<username>.json` like this:
+
+```json
+{
+    "username": "<username>",
+    "password_hash": "<password hash>",
+    "public_key": "ssh-rsa <public key> <username>"
+}
+```
+
+### bashrc profile (optional)
+
+You can add a custom `.bashrc` for your user. You just have to add it as a plain text file, as `common/users/<username>.bashrc`.
