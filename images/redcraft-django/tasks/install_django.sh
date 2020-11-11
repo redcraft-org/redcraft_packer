@@ -21,6 +21,12 @@ mkdir -p /var/log/redcraft
 chown -R gunicorn:gunicorn /opt/redcraft_website
 chown -R gunicorn:gunicorn /var/log/redcraft
 
+# Install authbind to use port 80
+apt-get install -y authbind
+touch /etc/authbind/byport/80
+chmod 500 /etc/authbind/byport/80
+chown gunicorn /etc/authbind/byport/80
+
 # Start gunicorn at boot
 mv /tmp/gunicorn.service /etc/systemd/system/gunicorn.service
 systemctl daemon-reload

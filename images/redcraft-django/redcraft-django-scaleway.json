@@ -4,11 +4,11 @@
             "access_key": "{{ user `access_key` }}",
             "commercial_type": "DEV1-S",
             "image": "cc9188b3-3938-47d7-b091-c9ecad1fe507",
-            "image_name": "redcraft-redis-{{ timestamp }}",
+            "image_name": "redcraft-django-{{ timestamp }}",
             "project_id": "{{ user `project_id` }}",
             "remove_volume": true,
             "secret_key": "{{ user `secret_key` }}",
-            "snapshot_name": "redcraft-redis-image-snapshot-{{ timestamp }}",
+            "snapshot_name": "redcraft-django-image-snapshot-{{ timestamp }}",
             "ssh_username": "root",
             "type": "scaleway",
             "zone": "{{ user `zone` }}"
