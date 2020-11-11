@@ -13,7 +13,7 @@ add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 apt-get update
 
 # Install packages
-apt-get install -y htop python3 tmux byobu git jq adoptopenjdk-8-hotspot dirmngr gnupg multitail tree iotop cowsay sl iftop dnsutils traceroute python3-dev python3-pip default-libmysqlclient-dev mariadb-client build-essential
+apt-get install -y htop python3 python3-venv python3-dev python3-pip tmux byobu git jq adoptopenjdk-8-hotspot dirmngr gnupg multitail tree iotop cowsay sl iftop dnsutils traceroute default-libmysqlclient-dev mariadb-client build-essential
 
 # Setup user accounts
 for user in /tmp/users/*.json; do

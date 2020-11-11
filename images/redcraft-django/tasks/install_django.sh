@@ -8,8 +8,13 @@ mkdir /opt/redcraft_website
 chown -R gunicorn:gunicorn /opt/redcraft_website
 
 # Install redcraft_website
-python3 -m pip install gitpython gunicorn
-gunicorn git clone https://github.com/redcraft-org/redcraft_website.git
+cd /opt
+git clone https://github.com/redcraft-org/redcraft_website.git
+cd /opt/redcraft_website
+python3 -m venv env
+source env/bin/activate
+pip install gunicorn
+pip install -r requirements.txt
 
 # Config permissions and directories
 mkdir -p /var/log/redcraft
