@@ -12,5 +12,3 @@ apt-get update
 sleep 1
 apt-get --assume-yes install pritunl mongodb-org dirmngr
 systemctl enable mongod pritunl
-
-echo '' > /root/.ssh/authorized_keys

@@ -61,6 +61,3 @@ echo '@reboot root /root/first_start_provisioning.sh' > /etc/cron.d/first_start_
 
 # Remove useless packages to reduce the image size
 apt-get autoremove -y
-
-# Remove temporary SSH keys for root user
-echo '' > /root/.ssh/authorized_keys
