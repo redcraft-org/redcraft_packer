@@ -32,5 +32,3 @@ fi
 EOF
 
 chmod +x /etc/rc.local
-
-echo '' > /root/.ssh/authorized_keys
