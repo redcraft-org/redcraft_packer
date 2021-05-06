@@ -1,0 +1,65 @@
+{
+    "builders": [
+        {
+            "ssh_host": "{{ user `ssh_host` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "type": "null"
+        }
+    ],
+    "provisioners": [
+        {
+            "destination": "/tmp/motd.head",
+            "source": "../../common/config/motd.head",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/users",
+            "source": "../../common/users",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/first_start_provisioning.sh",
+            "source": "../../common/tasks/first_start_provisioning.sh",
+            "type": "file"
+        },
+        {
+            "scripts": [
+                "../../common/tasks/provision.sh"
+            ],
+            "type": "shell"
+        },
+        {
+            "destination": "/tmp/rcsm.service",
+            "source": "config/rcsm.service",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/rcsm_config",
+            "source": "config/rcsm_config",
+            "type": "file"
+        },
+        {
+            "destination": "/tmp/openvpn_config",
+            "source": "config/openvpn_config",
+            "type": "file"
+        },
+        {
+            "scripts": [
+                "tasks/install_rcsm.sh"
+            ],
+            "type": "shell"
+        },
+        {
+            "scripts": [
+                "tasks/install_openvpn.sh"
+            ],
+            "type": "shell"
+        }
+    ],
+    "variables": {
+        "ssh_host": "{{ env `SSH_HOST` }}",
+        "ssh_username": "{{ env `SSH_USERNAME` }}",
+        "ssh_password": "{{ env `SSH_PASSWORD` }}"
+    }
+}
