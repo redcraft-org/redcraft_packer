@@ -3,8 +3,12 @@
 set -e
 
 # Add minecraft user
-adduser --system --no-create-home --group minecraft
-mkdir /opt/rcsm
+if id -u minecraft > /dev/null 2>&1; then
+    echo "User minecraft already exists, using existing one"
+else
+    adduser --system --no-create-home --group minecraft
+fi
+mkdir -p /opt/rcsm
 chown -R minecraft:minecraft /opt/rcsm
 
 # Install rcsm

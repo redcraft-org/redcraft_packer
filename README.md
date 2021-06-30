@@ -39,7 +39,11 @@ Notice: all our images are based on Debian 10, and its Scaleway ID is `cc9188b3-
 
 ##### `minecraft` image
 
-The `redcraft-minecraft` image installs [rcsm](https://github.com/redcraft-org/redcraft_server_management) and you'll need to copy `rcsm_config.example` to `rcsm_config` and update the config to your needs
+The `redcraft-minecraft` image installs [rcsm](https://github.com/redcraft-org/redcraft_server_management) and you'll need to copy `rcsm_config.example` to `rcsm_config` and update the config to your needs.
+
+If you use the SSH version (`redcraft-minecraft-ssh.json`), you'll need to copy `openvpn_config.example` to `openvpn_config` to connect to your cloud provider private network. If you empty the file, OpenVPN setup will be skipped.
+
+You can setup a remote SSH server out of Scaleway with the following command: `SSH_HOST=<ip address> SSH_USERNAME=<username> SSH_PASSWORD=<password> packer build redcraft-minecraft-ssh.json`
 
 ## Add your user account
 
