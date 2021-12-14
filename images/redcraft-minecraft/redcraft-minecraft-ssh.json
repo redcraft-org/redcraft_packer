@@ -40,8 +40,8 @@
             "type": "file"
         },
         {
-            "destination": "/tmp/openvpn_config",
-            "source": "config/openvpn_config",
+            "destination": "/tmp/wireguard.conf",
+            "source": "config/wireguard.conf",
             "type": "file"
         },
         {
@@ -52,7 +52,7 @@
         },
         {
             "scripts": [
-                "tasks/install_openvpn.sh"
+                "tasks/install_wireguard.sh"
             ],
             "type": "shell"
         }

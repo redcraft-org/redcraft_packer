@@ -4,19 +4,6 @@
 
 ## How to use it
 
-### Set up Scaleway environment
-
-We build all our images for Scaleway, so you'll need a Scaleway account.
-
-You need to make sure the following environment variables are defined (you can generate credentials from [the Scaleway console](https://console.scaleway.com/project/credentials)):
-
-- `SCW_ACCESS_KEY`
-- `SCW_SECRET_KEY`
-- `SCW_DEFAULT_PROJECT_ID`
-- `SCW_DEFAULT_ZONE`
-
-Notice: As of 2020, RedCraft uses the `par-1` zone.
-
 ### Configure first start provisioning
 
 The first start provisioning script is ran when the image is actually deployed, not during the image build.
@@ -33,17 +20,15 @@ To build an image, `cd` to the image directory and run the following command :
 An alternative to setting environment variables is to define variables in the build command (not recommended, especially if you share your computer):
 `packer build -var 'access_key=<access_key>' -var 'secret_key=<secret_key>' -var 'project_id=<project_id>' -var 'zone=<zone>' redcraft-*.json`
 
-Notice: all our images are based on Debian 10, and its Scaleway ID is `cc9188b3-3938-47d7-b091-c9ecad1fe507`
-
 #### Special notes
 
 ##### `minecraft` image
 
 The `redcraft-minecraft` image installs [rcsm](https://github.com/redcraft-org/redcraft_server_management) and you'll need to copy `rcsm_config.example` to `rcsm_config` and update the config to your needs.
 
-If you use the SSH version (`redcraft-minecraft-ssh.json`), you'll need to copy `openvpn_config.example` to `openvpn_config` to connect to your cloud provider private network. If you empty the file, OpenVPN setup will be skipped.
+You'll need to copy `wireguard.conf.example` to `wireguard.conf` to connect to your cloud provider private network. If you leave this file empty, OpenVPN setup will be skipped.
 
-You can setup a remote SSH server out of Scaleway with the following command: `SSH_HOST=<ip address> SSH_USERNAME=<username> SSH_PASSWORD=<password> packer build redcraft-minecraft-ssh.json`
+You can setup a remote SSH server with the following command: `SSH_HOST=<ip address> SSH_USERNAME=<username> SSH_PASSWORD=<password> packer build redcraft-minecraft-ssh.json`
 
 ## Add your user account
 

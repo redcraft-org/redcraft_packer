@@ -42,20 +42,10 @@ for user in /tmp/users/*.json; do
 done
 
 # Setup motd
-if [[ -f "/etc/update-motd.d/50-scw" ]]; then
-    mv /tmp/motd.head /etc/motd.head
-    sed -i '/Documentation:/d' /etc/update-motd.d/50-scw
-    sed -i '/Community:/d' /etc/update-motd.d/50-scw
-    sed -i '/Image source:/,+1 d' /etc/update-motd.d/50-scw
-else
-    mv /tmp/motd.head /etc/motd
-fi
+mv /tmp/motd.head /etc/motd
 
 # Remove SSH password authentication to enforce use of keys
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-
-# Fix locale error
-touch /var/lib/cloud/instance/locale-check.skip || exit 0
 
 # Setup netdata
 apt-get install -y autoconf autoconf-archive autogen automake cmake gcc libelf-dev libjson-c-dev libjudy-dev liblz4-dev libmnl-dev libssl-dev libtool libuv1-dev pkg-config uuid-dev
