@@ -26,7 +26,7 @@ An alternative to setting environment variables is to define variables in the bu
 
 The `redcraft-minecraft` image installs [rcsm](https://github.com/redcraft-org/redcraft_server_management) and you'll need to copy `rcsm_config.example` to `rcsm_config` and update the config to your needs.
 
-You'll need to copy `wireguard.conf.example` to `wireguard.conf` to connect to your cloud provider private network. If you leave this file empty, OpenVPN setup will be skipped.
+You'll need to copy `wireguard.conf.example` to `wireguard.conf` to connect to your cloud provider private network. If you leave this file empty, WireGuard setup will be skipped.
 
 You can setup a remote SSH server with the following command: `SSH_HOST=<ip address> SSH_USERNAME=<username> SSH_PASSWORD=<password> packer build redcraft-minecraft-ssh.json`
 
